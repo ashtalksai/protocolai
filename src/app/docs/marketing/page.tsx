@@ -1,6 +1,6 @@
 "use client"
 
-import { Megaphone, Users, MessageSquare, Calendar, BarChart3, CheckCircle2, Heart, Zap } from "lucide-react"
+import { Megaphone, Users, MessageSquare, Calendar, BarChart3, CheckCircle2, Heart } from "lucide-react"
 
 export default function MarketingPlanPage() {
   return (
@@ -92,19 +92,19 @@ export default function MarketingPlanPage() {
               <div className="space-y-4">
                 <div className="bg-white rounded-xl p-5 shadow-sm border-l-4 border-[#F59E0B]">
                   <h3 className="font-bold text-[#1E3A5F] mb-2">⚡ Speed</h3>
-                  <p className="text-gray-600 text-sm">"3 minutes, not 3 hours"</p>
+                  <p className="text-gray-600 text-sm">&quot;3 minutes, not 3 hours&quot;</p>
                   <p className="text-xs text-gray-400 mt-2">Key proof: Live demo showing real protocol generation</p>
                 </div>
                 
                 <div className="bg-[#1E3A5F] text-white rounded-xl p-5">
                   <h3 className="font-bold mb-2">🧠 Intelligence</h3>
-                  <p className="text-white/80 text-sm">"AI trained on functional medicine"</p>
+                  <p className="text-white/80 text-sm">&quot;AI trained on functional medicine&quot;</p>
                   <p className="text-xs text-white/60 mt-2">Key proof: Condition-specific protocols, evidence citations</p>
                 </div>
                 
                 <div className="bg-white rounded-xl p-5 shadow-sm border-l-4 border-[#1E3A5F]">
                   <h3 className="font-bold text-[#1E3A5F] mb-2">🎯 Control</h3>
-                  <p className="text-gray-600 text-sm">"You're still the expert"</p>
+                  <p className="text-gray-600 text-sm">&quot;You&apos;re still the expert&quot;</p>
                   <p className="text-xs text-gray-400 mt-2">Key proof: Edit, customize, and approve every protocol</p>
                 </div>
               </div>
@@ -225,28 +225,28 @@ export default function MarketingPlanPage() {
                   <span className="text-green-500">✓</span>
                   <div>
                     <p className="font-medium">Be empathetic</p>
-                    <p className="text-sm text-green-700">"We know protocol work takes forever..."</p>
+                    <p className="text-sm text-green-700">&quot;We know protocol work takes forever...&quot;</p>
                   </div>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-green-500">✓</span>
                   <div>
                     <p className="font-medium">Use clinical language</p>
-                    <p className="text-sm text-green-700">"Evidence-based protocols" not "AI magic"</p>
+                    <p className="text-sm text-green-700">&quot;Evidence-based protocols&quot; not &quot;AI magic&quot;</p>
                   </div>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-green-500">✓</span>
                   <div>
                     <p className="font-medium">Respect expertise</p>
-                    <p className="text-sm text-green-700">"Augment your practice" not "replace you"</p>
+                    <p className="text-sm text-green-700">&quot;Augment your practice&quot; not &quot;replace you&quot;</p>
                   </div>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-green-500">✓</span>
                   <div>
                     <p className="font-medium">Show real results</p>
-                    <p className="text-sm text-green-700">"15 minutes vs 4 hours" with proof</p>
+                    <p className="text-sm text-green-700">&quot;15 minutes vs 4 hours&quot; with proof</p>
                   </div>
                 </li>
               </ul>
@@ -263,21 +263,21 @@ export default function MarketingPlanPage() {
                   <span className="text-red-500">✕</span>
                   <div>
                     <p className="font-medium">Oversell AI</p>
-                    <p className="text-sm text-red-700">Avoid "revolutionary" or "groundbreaking"</p>
+                    <p className="text-sm text-red-700">Avoid &quot;revolutionary&quot; or &quot;groundbreaking&quot;</p>
                   </div>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-red-500">✕</span>
                   <div>
                     <p className="font-medium">Be dismissive</p>
-                    <p className="text-sm text-red-700">Never imply their current process is "wrong"</p>
+                    <p className="text-sm text-red-700">Never imply their current process is &quot;wrong&quot;</p>
                   </div>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-red-500">✕</span>
                   <div>
                     <p className="font-medium">Use hype language</p>
-                    <p className="text-sm text-red-700">"10x" or "game-changer" sounds scammy</p>
+                    <p className="text-sm text-red-700">&quot;10x&quot; or &quot;game-changer&quot; sounds scammy</p>
                   </div>
                 </li>
                 <li className="flex gap-3">

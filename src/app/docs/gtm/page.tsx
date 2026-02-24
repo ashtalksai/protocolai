@@ -1,7 +1,6 @@
 "use client"
 
-import { Calendar, Target, TrendingUp, DollarSign, Users, Zap, CheckCircle2, ArrowRight } from "lucide-react"
-import Image from "next/image"
+import { Calendar, Target, TrendingUp, DollarSign, Zap, CheckCircle2 } from "lucide-react"
 
 export default function GTMPlanPage() {
   return (
