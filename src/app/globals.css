@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary Palette */
+    --background: 0 0% 98%;
+    --surface: 0 0% 100%;
+    --surface-hover: 0 0% 96%;
+    
+    /* Borders & Dividers */
+    --border: 220 13% 91%;
+    --border-hover: 217 10% 84%;
+    
+    /* Text Hierarchy */
+    --text-primary: 210 40% 16%;
+    --text-secondary: 215 28% 25%;
+    --text-muted: 220 9% 46%;
+    --text-disabled: 218 11% 65%;
+    
+    /* Brand Colors */
+    --accent: 38 92% 50%;
+    --accent-hover: 32 95% 44%;
+    --accent-foreground: 0 0% 100%;
+    
+    --primary: 210 53% 25%;
+    --primary-hover: 207 50% 34%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Semantic Colors */
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 26 94% 17%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
+    
+    /* shadcn required */
+    --card: 0 0% 100%;
+    --card-foreground: 210 40% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 40% 16%;
+    --secondary: 220 13% 91%;
+    --secondary-foreground: 210 40% 16%;
+    --muted: 220 13% 91%;
+    --muted-foreground: 220 9% 46%;
+    --ring: 38 92% 50%;
+    --input: 220 13% 91%;
+    --foreground: 210 40% 16%;
+    
+    /* Radius */
+    --radius: 0.75rem;
+    --radius-sm: 0.375rem;
+    --radius-lg: 1rem;
+    
+    /* Shadows */
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-dropdown: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-modal: 0 25px 50px rgba(0, 0, 0, 0.15);
+    --shadow-focus: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    
+    /* Spacing */
+    --section-padding-desktop: 5rem;
+    --section-padding-mobile: 3rem;
+    --container-max-width: 1200px;
+    --container-padding: 1.5rem;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --surface: 217 33% 17%;
+    --surface-hover: 215 25% 27%;
+    --border: 215 25% 27%;
+    --border-hover: 215 20% 35%;
+    --text-primary: 210 40% 98%;
+    --text-secondary: 215 20% 91%;
+    --text-muted: 215 20% 65%;
+    --text-disabled: 215 19% 40%;
+    
+    --card: 217 33% 17%;
+    --card-foreground: 210 40% 98%;
+    --popover: 217 33% 17%;
+    --popover-foreground: 210 40% 98%;
+    --secondary: 215 25% 27%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 215 25% 27%;
+    --muted-foreground: 215 20% 65%;
+    --foreground: 210 40% 98%;
+    --input: 215 25% 27%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-h1 {
+    @apply text-5xl font-bold tracking-tight leading-tight md:text-4xl;
+  }
+  .text-h2 {
+    @apply text-4xl font-bold tracking-tight leading-snug md:text-3xl;
+  }
+  .text-h3 {
+    @apply text-2xl font-semibold leading-normal md:text-xl;
+  }
+  .text-h4 {
+    @apply text-xl font-semibold leading-relaxed;
+  }
+  .text-h5 {
+    @apply text-lg font-semibold leading-relaxed;
+  }
+  .text-body-lg {
+    @apply text-lg leading-relaxed;
+  }
+  .text-body {
+    @apply text-base leading-relaxed;
+  }
+  .text-body-sm {
+    @apply text-sm leading-normal;
+  }
+  .text-label {
+    @apply text-sm font-medium tracking-wide;
+  }
+  .text-caption {
+    @apply text-xs text-text-muted;
+  }
+  .text-mono {
+    @apply font-mono text-sm;
+  }
+  .section-padding {
+    @apply py-20 md:py-12;
+  }
+  .container-custom {
+    @apply max-w-7xl mx-auto px-6;
+  }
+}
