@@ -17,10 +17,13 @@ import {
   Layers,
   Box,
   Presentation,
-  ExternalLink
+  ExternalLink,
+  Download,
+  Image as ImageIcon,
+  Sparkles
 } from "lucide-react"
 
-type Section = "gtm" | "marketing" | "brand"
+type Section = "gtm" | "marketing" | "brand" | "assets"
 
 export default function DocsPage() {
   const [activeSection, setActiveSection] = useState<Section>("gtm")
@@ -29,6 +32,7 @@ export default function DocsPage() {
     { id: "gtm" as Section, label: "GTM Plan", icon: Target, description: "Go-to-market strategy" },
     { id: "marketing" as Section, label: "Marketing Plan", icon: Megaphone, description: "Positioning & KPIs" },
     { id: "brand" as Section, label: "Brand Spec", icon: Palette, description: "Design system" },
+    { id: "assets" as Section, label: "Assets", icon: Sparkles, description: "Brand assets & downloads" },
   ]
 
   return (
@@ -138,6 +142,7 @@ export default function DocsPage() {
           {activeSection === "gtm" && <GTMContent />}
           {activeSection === "marketing" && <MarketingContent />}
           {activeSection === "brand" && <BrandContent />}
+          {activeSection === "assets" && <AssetsContent />}
         </main>
       </div>
     </div>
@@ -616,6 +621,183 @@ function BrandContent() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function AssetsContent() {
+  const assets = [
+    {
+      name: "Logo",
+      description: "Primary brand logo",
+      dimensions: "1500 × 750px",
+      format: "PNG",
+      preview: "/images/logo.png",
+      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      bgColor: "#1E3A5F",
+    },
+    {
+      name: "Favicon",
+      description: "Browser tab icon",
+      dimensions: "32 × 32px",
+      format: "ICO / PNG",
+      preview: "/favicon.ico",
+      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      bgColor: "#FAFAFA",
+    },
+    {
+      name: "App Icon",
+      description: "Mobile & app stores",
+      dimensions: "1080 × 1080px",
+      format: "PNG",
+      preview: "/images/app-icon.png",
+      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      bgColor: "#1E3A5F",
+    },
+    {
+      name: "OG Image",
+      description: "Social sharing preview",
+      dimensions: "1200 × 630px",
+      format: "PNG",
+      preview: "/images/og-image.png",
+      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      bgColor: "#1E3A5F",
+    },
+    {
+      name: "LinkedIn Banner",
+      description: "Company page banner",
+      dimensions: "1584 × 396px",
+      format: "PNG",
+      preview: "/images/linkedin-banner.png",
+      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      bgColor: "#1E3A5F",
+    },
+    {
+      name: "Twitter Header",
+      description: "Profile header image",
+      dimensions: "1500 × 500px",
+      format: "PNG",
+      preview: "/images/twitter-header.png",
+      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      bgColor: "#1E3A5F",
+    },
+  ]
+
+  return (
+    <div>
+      {/* Title */}
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-12 h-12 rounded-xl bg-[#1E3A5F] flex items-center justify-center">
+          <Sparkles className="w-6 h-6 text-[#F59E0B]" />
+        </div>
+        <div>
+          <h1 className="text-4xl font-bold text-[#1E3A5F]">Brand Assets</h1>
+          <p className="text-gray-500">Logo, icons & social media kit</p>
+        </div>
+      </div>
+
+      {/* Download All Banner */}
+      <div className="bg-gradient-to-br from-[#1E3A5F] to-[#2D4A6F] text-white rounded-2xl p-6 mb-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-semibold mb-1">Complete Asset Package</h2>
+            <p className="text-white/70">Download all brand assets in one click</p>
+          </div>
+          <a
+            href="https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#F59E0B] hover:bg-[#D97706] text-white px-6 py-3 rounded-xl font-medium transition-colors"
+          >
+            <Download className="w-5 h-5" />
+            Open in Google Drive
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+
+      {/* Asset Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {assets.map((asset, i) => (
+          <div
+            key={i}
+            className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow group"
+          >
+            {/* Preview Area */}
+            <div
+              className="h-40 flex items-center justify-center p-4 relative"
+              style={{ backgroundColor: asset.bgColor }}
+            >
+              <ImageIcon className={`w-16 h-16 ${asset.bgColor === "#FAFAFA" ? "text-[#1E3A5F]/20" : "text-white/30"}`} />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+            </div>
+
+            {/* Info */}
+            <div className="p-4">
+              <div className="flex items-start justify-between mb-2">
+                <div>
+                  <h3 className="font-semibold text-[#1E3A5F]">{asset.name}</h3>
+                  <p className="text-sm text-gray-500">{asset.description}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 text-xs text-gray-400 mb-4">
+                <span className="bg-gray-100 px-2 py-1 rounded font-mono">{asset.dimensions}</span>
+                <span className="bg-gray-100 px-2 py-1 rounded font-mono">{asset.format}</span>
+              </div>
+
+              <a
+                href={asset.downloadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 border-2 border-[#1E3A5F] text-[#1E3A5F] px-4 py-2 rounded-lg font-medium hover:bg-[#1E3A5F] hover:text-white transition-colors text-sm"
+              >
+                <Download className="w-4 h-4" />
+                Download
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Usage Guidelines */}
+      <div className="mt-12 bg-[#FAFAFA] border border-gray-200 rounded-xl p-6">
+        <h3 className="font-semibold text-[#1E3A5F] mb-4">Usage Guidelines</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-medium text-[#1E3A5F]">Maintain clear space</p>
+                <p className="text-sm text-gray-500">Keep minimum padding around the logo equal to the height of the &quot;P&quot;</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-medium text-[#1E3A5F]">Use on approved backgrounds</p>
+                <p className="text-sm text-gray-500">White, off-white (#FAFAFA), or Deep Navy (#1E3A5F)</p>
+              </div>
+            </div>
+          </div>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <span className="w-5 h-5 rounded-full border-2 border-red-500 flex items-center justify-center text-red-500 text-xs font-bold mt-0.5 flex-shrink-0">✕</span>
+              <div>
+                <p className="font-medium text-[#1E3A5F]">Don&apos;t alter colors</p>
+                <p className="text-sm text-gray-500">Never change the brand colors or add effects</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="w-5 h-5 rounded-full border-2 border-red-500 flex items-center justify-center text-red-500 text-xs font-bold mt-0.5 flex-shrink-0">✕</span>
+              <div>
+                <p className="font-medium text-[#1E3A5F]">Don&apos;t distort</p>
+                <p className="text-sm text-gray-500">Always maintain aspect ratio when scaling</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
