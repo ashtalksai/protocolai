@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft, ChevronRight, Activity, Brain, Target, TrendingUp, Zap, Users, DollarSign, Swords, Rocket, HandCoins, Clock, Eye } from "lucide-react"
-import { Logo } from "@/components/ui/logo"
+import { ChevronLeft, ChevronRight, Activity, Brain, Target, TrendingUp, Zap, DollarSign, Swords, Rocket, HandCoins, Clock, Eye } from "lucide-react"
 
 const slides = [
   {
@@ -899,7 +898,7 @@ function VisionSlide({ slide }: { slide: (typeof slides)[11] }) {
         transition={{ delay: 0.7 }}
         className="text-2xl md:text-3xl font-bold text-accent text-center max-w-2xl"
       >
-        "{slide.closing}"
+        &ldquo;{slide.closing}&rdquo;
       </motion.div>
     </div>
   )
