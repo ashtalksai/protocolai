@@ -30,7 +30,7 @@ export default function MarketingPlanPage() {
           
           <div className="mt-8">
             <p className="text-2xl font-medium text-[#F59E0B]">
-              "Generate Functional Medicine Protocols in Minutes, Not Hours"
+              &quot;Generate Functional Medicine Protocols in Minutes, Not Hours&quot;
             </p>
           </div>
         </div>
@@ -256,7 +256,7 @@ export default function MarketingPlanPage() {
             <div className="bg-red-50 rounded-xl p-6 border border-red-200">
               <h3 className="font-bold text-red-800 mb-4 flex items-center gap-2">
                 <span className="w-5 h-5 rounded-full border-2 border-current flex items-center justify-center text-xs">✕</span>
-                DON'T
+                DON&apos;T
               </h3>
               <ul className="space-y-3 text-red-900">
                 <li className="flex gap-3">
