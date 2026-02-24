@@ -66,17 +66,17 @@ const slides = [
     type: "traction",
     icon: TrendingUp,
     title: "Traction",
-    headline: "Validated Pain Point, Ready for Launch",
+    headline: "Launching Q1 2026 — Validated & Ready",
     signals: [
       { platform: "Reddit", members: "2.5M+", score: "8/10 validation" },
       { platform: "Facebook", members: "150K+", score: "7/10 engagement" },
       { platform: "YouTube", members: "14 channels", score: "7/10 demand" },
     ],
     status: [
-      "MVP live at protocolai.ashketing.com",
-      "AI protocol generation functional",
-      "HIPAA compliance in place",
-      "Stripe integration ready",
+      "Product development underway",
+      "AI protocol generation engine built",
+      "HIPAA compliance architecture in place",
+      "Stripe integration ready for launch",
     ],
   },
   {
