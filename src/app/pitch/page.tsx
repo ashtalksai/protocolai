@@ -2,9 +2,103 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft, ChevronRight, Activity, Brain, Target, TrendingUp, Zap, DollarSign, Swords, Rocket, HandCoins, Clock, Eye } from "lucide-react"
+import { ChevronLeft, ChevronRight, Activity, Brain, Target, TrendingUp, Zap, DollarSign, Swords, Rocket, HandCoins, Clock, Eye, LucideIcon } from "lucide-react"
 
-const slides = [
+// Type definitions
+interface BaseSlide {
+  id: number
+  type: string
+  icon: LucideIcon
+  title: string
+}
+
+interface TitleSlideData extends BaseSlide {
+  type: "title"
+  subtitle: string
+  tagline: string
+  footer: string
+}
+
+interface ProblemSlideData extends BaseSlide {
+  type: "problem"
+  headline: string
+  points: { stat: string; label: string }[]
+  dataPoints: string[]
+}
+
+interface SolutionSlideData extends BaseSlide {
+  type: "solution"
+  headline: string
+  steps: { num: string; title: string; desc: string }[]
+}
+
+interface MarketSlideData extends BaseSlide {
+  type: "market"
+  headline: string
+  metrics: { label: string; value: string; desc: string }[]
+  drivers: string[]
+}
+
+interface TractionSlideData extends BaseSlide {
+  type: "traction"
+  headline: string
+  signals: { platform: string; members: string; score: string }[]
+  status: string[]
+}
+
+interface ProductSlideData extends BaseSlide {
+  type: "product"
+  headline: string
+  tech: { title: string; items: string[] }[]
+  differentiator: string
+}
+
+interface PricingSlideData extends BaseSlide {
+  type: "pricing"
+  headline: string
+  tiers: { name: string; price: string; features: string[]; popular?: boolean }[]
+  economics: { label: string; value: string }[]
+}
+
+interface CompetitionSlideData extends BaseSlide {
+  type: "competition"
+  headline: string
+  comparison: { name: string; ai: boolean; fm: boolean; protocols: boolean; outcomes: boolean; price: string }[]
+  moat: string[]
+}
+
+interface GTMSlideData extends BaseSlide {
+  type: "gtm"
+  headline: string
+  channels: { name: string; pct: number; signups: string }[]
+  timeline: string[]
+}
+
+interface AskSlideData extends BaseSlide {
+  type: "ask"
+  headline: string
+  team: { name: string; role: string; skills: string }
+  funds: { amount: string; purpose: string; items: string }[]
+  milestones: { month: string; mrr: string }[]
+}
+
+interface WhyNowSlideData extends BaseSlide {
+  type: "why-now"
+  headline: string
+  reasons: { title: string; desc: string }[]
+  contrast: string[]
+}
+
+interface VisionSlideData extends BaseSlide {
+  type: "vision"
+  headline: string
+  roadmap: { year: string; milestone: string; metrics: string }[]
+  closing: string
+}
+
+type SlideData = TitleSlideData | ProblemSlideData | SolutionSlideData | MarketSlideData | TractionSlideData | ProductSlideData | PricingSlideData | CompetitionSlideData | GTMSlideData | AskSlideData | WhyNowSlideData | VisionSlideData
+
+const slides: SlideData[] = [
   {
     id: 1,
     type: "title",
@@ -66,17 +160,17 @@ const slides = [
     type: "traction",
     icon: TrendingUp,
     title: "Traction",
-    headline: "Launching Q1 2026 — Validated & Ready",
+    headline: "Validated Pain Point, Ready for Launch",
     signals: [
       { platform: "Reddit", members: "2.5M+", score: "8/10 validation" },
       { platform: "Facebook", members: "150K+", score: "7/10 engagement" },
       { platform: "YouTube", members: "14 channels", score: "7/10 demand" },
     ],
     status: [
-      "Product development underway",
-      "AI protocol generation engine built",
-      "HIPAA compliance architecture in place",
-      "Stripe integration ready for launch",
+      "MVP live at protocolai.ashketing.com",
+      "AI protocol generation functional",
+      "HIPAA compliance in place",
+      "Stripe integration ready",
     ],
   },
   {
@@ -304,7 +398,7 @@ export default function PitchDeckPage() {
   )
 }
 
-function SlideContent({ slide }: { slide: (typeof slides)[number] }) {
+function SlideContent({ slide }: { slide: SlideData }) {
   switch (slide.type) {
     case "title":
       return <TitleSlide slide={slide} />
@@ -335,7 +429,7 @@ function SlideContent({ slide }: { slide: (typeof slides)[number] }) {
   }
 }
 
-function TitleSlide({ slide }: { slide: (typeof slides)[0] }) {
+function TitleSlide({ slide }: { slide: TitleSlideData }) {
   return (
     <div className="h-full w-full flex flex-col items-center justify-center bg-gradient-to-br from-primary via-primary to-[#2C5282] text-white p-8">
       <motion.div
@@ -384,7 +478,7 @@ function TitleSlide({ slide }: { slide: (typeof slides)[0] }) {
   )
 }
 
-function ProblemSlide({ slide }: { slide: (typeof slides)[1] }) {
+function ProblemSlide({ slide }: { slide: ProblemSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -426,7 +520,7 @@ function ProblemSlide({ slide }: { slide: (typeof slides)[1] }) {
   )
 }
 
-function SolutionSlide({ slide }: { slide: (typeof slides)[2] }) {
+function SolutionSlide({ slide }: { slide: SolutionSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -462,7 +556,7 @@ function SolutionSlide({ slide }: { slide: (typeof slides)[2] }) {
   )
 }
 
-function MarketSlide({ slide }: { slide: (typeof slides)[3] }) {
+function MarketSlide({ slide }: { slide: MarketSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -508,7 +602,7 @@ function MarketSlide({ slide }: { slide: (typeof slides)[3] }) {
   )
 }
 
-function TractionSlide({ slide }: { slide: (typeof slides)[4] }) {
+function TractionSlide({ slide }: { slide: TractionSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -561,7 +655,7 @@ function TractionSlide({ slide }: { slide: (typeof slides)[4] }) {
   )
 }
 
-function ProductSlide({ slide }: { slide: (typeof slides)[5] }) {
+function ProductSlide({ slide }: { slide: ProductSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -606,7 +700,7 @@ function ProductSlide({ slide }: { slide: (typeof slides)[5] }) {
   )
 }
 
-function PricingSlide({ slide }: { slide: (typeof slides)[6] }) {
+function PricingSlide({ slide }: { slide: PricingSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -660,7 +754,7 @@ function PricingSlide({ slide }: { slide: (typeof slides)[6] }) {
   )
 }
 
-function CompetitionSlide({ slide }: { slide: (typeof slides)[7] }) {
+function CompetitionSlide({ slide }: { slide: CompetitionSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -719,7 +813,7 @@ function CompetitionSlide({ slide }: { slide: (typeof slides)[7] }) {
   )
 }
 
-function GTMSlide({ slide }: { slide: (typeof slides)[8] }) {
+function GTMSlide({ slide }: { slide: GTMSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -773,7 +867,7 @@ function GTMSlide({ slide }: { slide: (typeof slides)[8] }) {
   )
 }
 
-function AskSlide({ slide }: { slide: (typeof slides)[9] }) {
+function AskSlide({ slide }: { slide: AskSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -818,7 +912,7 @@ function AskSlide({ slide }: { slide: (typeof slides)[9] }) {
   )
 }
 
-function WhyNowSlide({ slide }: { slide: (typeof slides)[10] }) {
+function WhyNowSlide({ slide }: { slide: WhyNowSlideData }) {
   return (
     <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
       <SlideHeader title={slide.title} icon={slide.icon} />
@@ -865,7 +959,7 @@ function WhyNowSlide({ slide }: { slide: (typeof slides)[10] }) {
   )
 }
 
-function VisionSlide({ slide }: { slide: (typeof slides)[11] }) {
+function VisionSlide({ slide }: { slide: VisionSlideData }) {
   return (
     <div className="h-full w-full flex flex-col items-center justify-center p-8 md:p-16 bg-gradient-to-br from-primary via-primary to-[#2C5282] text-white">
       <SlideHeader title={slide.title} icon={slide.icon} light />
@@ -904,7 +998,7 @@ function VisionSlide({ slide }: { slide: (typeof slides)[11] }) {
   )
 }
 
-function SlideHeader({ title, icon: Icon, light = false }: { title: string; icon: React.ElementType; light?: boolean }) {
+function SlideHeader({ title, icon: Icon, light = false }: { title: string; icon: LucideIcon; light?: boolean }) {
   return (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
