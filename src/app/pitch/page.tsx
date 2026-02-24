@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight, Activity, Brain, Target, TrendingUp, Zap, DollarSign, Swords, Rocket, HandCoins, Clock, Eye, LucideIcon } from "lucide-react"
+import Image from "next/image"
 
 // Type definitions
 interface BaseSlide {
@@ -133,8 +134,8 @@ const slides: SlideData[] = [
     headline: "From Client Data to Complete Protocol in 3 Minutes",
     steps: [
       { num: "01", title: "Input", desc: "Symptoms, lab results, health history" },
-      { num: "02", title: "Generate", desc: "AI creates personalized protocol with supplements, diet, lifestyle" },
-      { num: "03", title: "Refine", desc: "Practitioner reviews, edits, adds clinical notes" },
+      { num: "02", title: "Generate", desc: "AI creates personalized protocol" },
+      { num: "03", title: "Refine", desc: "Review, edit, add clinical notes" },
       { num: "04", title: "Deliver", desc: "Export PDF, share with client" },
     ],
   },
@@ -341,19 +342,19 @@ export default function PitchDeckPage() {
   const slide = slides[currentSlide]
 
   return (
-    <div className="h-screen w-screen bg-white overflow-hidden relative">
+    <div className="h-screen w-screen bg-background overflow-hidden relative">
       {/* Navigation Arrows */}
       <button
         onClick={() => paginate(-1)}
         disabled={currentSlide === 0}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-card/80 backdrop-blur border border-border shadow-lg hover:bg-card disabled:opacity-30 disabled:cursor-not-allowed transition-all"
       >
         <ChevronLeft className="w-6 h-6 text-primary" />
       </button>
       <button
         onClick={() => paginate(1)}
         disabled={currentSlide === slides.length - 1}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/80 backdrop-blur border border-gray-200 shadow-lg hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-card/80 backdrop-blur border border-border shadow-lg hover:bg-card disabled:opacity-30 disabled:cursor-not-allowed transition-all"
       >
         <ChevronRight className="w-6 h-6 text-primary" />
       </button>
@@ -367,15 +368,15 @@ export default function PitchDeckPage() {
               setDirection(idx > currentSlide ? 1 : -1)
               setCurrentSlide(idx)
             }}
-            className={`w-2 h-2 rounded-full transition-all ${
-              idx === currentSlide ? "w-8 bg-accent" : "bg-gray-300 hover:bg-gray-400"
+            className={`h-2 rounded-full transition-all ${
+              idx === currentSlide ? "w-8 bg-accent" : "w-2 bg-muted hover:bg-muted-foreground/30"
             }`}
           />
         ))}
       </div>
 
       {/* Slide Counter */}
-      <div className="absolute top-6 right-8 z-50 font-mono text-sm text-text-muted">
+      <div className="absolute top-6 right-8 z-50 font-mono text-sm text-muted-foreground">
         {String(currentSlide + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
       </div>
 
@@ -429,586 +430,832 @@ function SlideContent({ slide }: { slide: SlideData }) {
   }
 }
 
+// ============================================
+// TITLE SLIDE - Hero + Support Pattern
+// ============================================
 function TitleSlide({ slide }: { slide: TitleSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center bg-gradient-to-br from-primary via-primary to-[#2C5282] text-white p-8">
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="mb-8"
-      >
-        <div className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur flex items-center justify-center">
-          <Activity className="w-12 h-12 text-accent" />
+    <div className="h-full w-full relative overflow-hidden">
+      {/* Background image with overlay */}
+      <div className="absolute inset-0">
+        <Image
+          src="/pitch/hero-title.png"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-primary/80" />
+      </div>
+      
+      {/* Bento layout - Hero left, accent card right */}
+      <div className="relative h-full flex items-center justify-center p-8 md:p-16">
+        <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Hero content - 2/3 */}
+          <div className="lg:col-span-2 flex flex-col justify-center">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="mb-8"
+            >
+              <div className="w-20 h-20 rounded-2xl bg-white/10 backdrop-blur flex items-center justify-center border border-white/20">
+                <Activity className="w-10 h-10 text-accent" />
+              </div>
+            </motion.div>
+            <motion.h1
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="text-5xl md:text-7xl font-bold text-white mb-4"
+            >
+              {slide.title}
+            </motion.h1>
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="text-xl md:text-2xl text-white/70 mb-6"
+            >
+              {slide.subtitle}
+            </motion.p>
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="text-lg md:text-xl text-accent font-medium"
+            >
+              {slide.tagline}
+            </motion.p>
+          </div>
+          
+          {/* Accent card - 1/3 */}
+          <motion.div
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="hidden lg:flex flex-col justify-center"
+          >
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+              <div className="text-accent font-mono text-sm mb-4">KEY METRICS</div>
+              <div className="space-y-6">
+                <div>
+                  <div className="text-4xl font-bold text-white">3 min</div>
+                  <div className="text-white/60 text-sm">Protocol generation time</div>
+                </div>
+                <div className="h-px bg-white/20" />
+                <div>
+                  <div className="text-4xl font-bold text-accent">90%</div>
+                  <div className="text-white/60 text-sm">Time saved per client</div>
+                </div>
+                <div className="h-px bg-white/20" />
+                <div>
+                  <div className="text-4xl font-bold text-white">$1.8M</div>
+                  <div className="text-white/60 text-sm">Year 1 ARR target</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </motion.div>
-      <motion.h1
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="text-6xl md:text-7xl font-bold mb-4"
-      >
-        {slide.title}
-      </motion.h1>
-      <motion.p
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        className="text-xl md:text-2xl text-white/80 mb-8"
-      >
-        {slide.subtitle}
-      </motion.p>
-      <motion.p
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="text-lg md:text-xl text-accent font-medium"
-      >
-        {slide.tagline}
-      </motion.p>
-      <motion.p
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="mt-12 font-mono text-white/60"
-      >
-        {slide.footer}
-      </motion.p>
+        
+        {/* Footer */}
+        <motion.p
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 font-mono text-white/40"
+        >
+          {slide.footer}
+        </motion.p>
+      </div>
     </div>
   )
 }
 
+// ============================================
+// PROBLEM SLIDE - Big Left + Stack Pattern
+// ============================================
 function ProblemSlide({ slide }: { slide: ProblemSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-primary mb-12 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="grid md:grid-cols-3 gap-8 mb-12">
-        {slide.points.map((point, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 + idx * 0.1 }}
-            className="bg-red-50 border border-red-100 rounded-xl p-6"
-          >
-            <div className="font-mono text-3xl font-bold text-red-500 mb-2">{point.stat}</div>
-            <div className="text-text-secondary">{point.label}</div>
-          </motion.div>
-        ))}
+    <div className="h-full w-full bg-muted/30 flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-6xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        
+        {/* Bento: Visual left (60%) + Pain points stacked right */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* Visual + headline - 3/5 */}
+          <div className="lg:col-span-3 relative">
+            <div className="aspect-[4/3] relative rounded-2xl overflow-hidden mb-6">
+              <Image
+                src="/pitch/problem-visual.png"
+                alt=""
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+              <motion.h2
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="absolute bottom-6 left-6 right-6 text-2xl md:text-3xl font-bold text-foreground"
+              >
+                {slide.headline}
+              </motion.h2>
+            </div>
+            
+            {/* Data points as pills */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="flex flex-wrap gap-3"
+            >
+              {slide.dataPoints.map((point, idx) => (
+                <span key={idx} className="px-4 py-2 bg-card rounded-full text-sm font-mono text-muted-foreground border border-border">
+                  {point}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+          
+          {/* Pain points stacked - 2/5 */}
+          <div className="lg:col-span-2 flex flex-col gap-4">
+            {slide.points.map((point, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ x: 30, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.3 + idx * 0.1 }}
+                className="bg-destructive/10 border border-destructive/20 rounded-xl p-6"
+              >
+                <div className="font-mono text-3xl font-bold text-destructive mb-2">{point.stat}</div>
+                <div className="text-foreground/70">{point.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
-      <motion.div
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="flex flex-wrap gap-4"
-      >
-        {slide.dataPoints.map((point, idx) => (
-          <span key={idx} className="px-4 py-2 bg-gray-100 rounded-full text-sm font-mono text-text-muted">
-            {point}
-          </span>
-        ))}
-      </motion.div>
     </div>
   )
 }
 
+// ============================================
+// SOLUTION SLIDE - Big Left + Stack Pattern
+// ============================================
 function SolutionSlide({ slide }: { slide: SolutionSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-primary mb-12 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="grid md:grid-cols-4 gap-6">
-        {slide.steps.map((step, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 + idx * 0.1 }}
-            className="relative"
-          >
-            <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-gray-100 rounded-xl p-6 h-full">
-              <div className="font-mono text-accent text-sm font-bold mb-3">{step.num}</div>
-              <div className="text-xl font-semibold text-primary mb-2">{step.title}</div>
-              <div className="text-text-muted text-sm">{step.desc}</div>
+    <div className="h-full w-full bg-background flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-6xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        
+        {/* Bento: Visual left (60%) + Steps stacked right */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* Visual + headline - 3/5 */}
+          <div className="lg:col-span-3">
+            <motion.h2
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-3xl md:text-4xl font-bold text-primary mb-6"
+            >
+              {slide.headline}
+            </motion.h2>
+            <div className="aspect-[4/3] relative rounded-2xl overflow-hidden">
+              <Image
+                src="/pitch/solution-visual.png"
+                alt=""
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent" />
             </div>
-            {idx < slide.steps.length - 1 && (
-              <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-0.5 bg-accent/30" />
-            )}
-          </motion.div>
-        ))}
+          </div>
+          
+          {/* Steps stacked - 2/5 */}
+          <div className="lg:col-span-2 flex flex-col gap-3">
+            {slide.steps.map((step, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ x: 30, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.3 + idx * 0.1 }}
+                className="relative bg-card border border-border rounded-xl p-5 hover:border-accent/50 transition-colors"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                    <span className="font-mono text-accent font-bold text-sm">{step.num}</span>
+                  </div>
+                  <div>
+                    <div className="text-lg font-semibold text-foreground mb-1">{step.title}</div>
+                    <div className="text-muted-foreground text-sm">{step.desc}</div>
+                  </div>
+                </div>
+                {idx < slide.steps.length - 1 && (
+                  <div className="absolute -bottom-2 left-9 w-0.5 h-4 bg-accent/30" />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
+// ============================================
+// MARKET SLIDE - Data Grid Pattern
+// ============================================
 function MarketSlide({ slide }: { slide: MarketSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-primary mb-12 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="grid md:grid-cols-3 gap-8 mb-12">
-        {slide.metrics.map((metric, idx) => (
+    <div className="h-full w-full bg-primary/5 flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-5xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        <motion.h2
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl md:text-4xl font-bold text-primary mb-10"
+        >
+          {slide.headline}
+        </motion.h2>
+        
+        {/* Bento data grid - asymmetric */}
+        <div className="grid grid-cols-6 gap-4 mb-8">
+          {/* TAM - large, spans 3 */}
           <motion.div
-            key={idx}
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3 + idx * 0.1 }}
-            className="text-center"
+            transition={{ delay: 0.3 }}
+            className="col-span-6 md:col-span-3 bg-primary text-primary-foreground rounded-2xl p-8"
           >
-            <div className="font-mono text-sm text-accent font-bold mb-2">{metric.label}</div>
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-2">{metric.value}</div>
-            <div className="text-text-muted text-sm">{metric.desc}</div>
+            <div className="font-mono text-accent text-sm font-bold mb-2">{slide.metrics[0].label}</div>
+            <div className="text-5xl md:text-6xl font-bold mb-3">{slide.metrics[0].value}</div>
+            <div className="text-primary-foreground/70">{slide.metrics[0].desc}</div>
           </motion.div>
-        ))}
-      </div>
-      <motion.div
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="bg-green-50 border border-green-100 rounded-xl p-6"
-      >
-        <div className="text-sm font-semibold text-green-700 mb-3">Growth Drivers</div>
-        <div className="flex flex-wrap gap-3">
-          {slide.drivers.map((driver, idx) => (
-            <span key={idx} className="px-3 py-1 bg-green-100 rounded-full text-sm text-green-800">
-              {driver}
-            </span>
-          ))}
+          
+          {/* SAM + SOM - stacked, spans 3 */}
+          <div className="col-span-6 md:col-span-3 flex flex-col gap-4">
+            {slide.metrics.slice(1).map((metric, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ x: 30, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.4 + idx * 0.1 }}
+                className="bg-card border border-border rounded-xl p-6 flex-1"
+              >
+                <div className="font-mono text-accent text-sm font-bold mb-1">{metric.label}</div>
+                <div className="text-3xl font-bold text-foreground mb-1">{metric.value}</div>
+                <div className="text-muted-foreground text-sm">{metric.desc}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </motion.div>
+        
+        {/* Drivers - horizontal strip */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="bg-success/10 border border-success/20 rounded-xl p-6"
+        >
+          <div className="text-sm font-semibold text-success mb-4">Growth Drivers</div>
+          <div className="flex flex-wrap gap-3">
+            {slide.drivers.map((driver, idx) => (
+              <span key={idx} className="px-4 py-2 bg-success/20 rounded-full text-sm text-success font-medium">
+                {driver}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </div>
   )
 }
 
+// ============================================
+// TRACTION SLIDE - Triptych Pattern
+// ============================================
 function TractionSlide({ slide }: { slide: TractionSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-primary mb-12 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="grid md:grid-cols-2 gap-8">
-        <motion.div
-          initial={{ x: -30, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
+    <div className="h-full w-full bg-background flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-5xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        <motion.h2
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl md:text-4xl font-bold text-primary mb-10"
         >
-          <div className="text-sm font-semibold text-text-muted mb-4">COMMUNITY SIGNALS</div>
-          <div className="space-y-4">
-            {slide.signals.map((signal, idx) => (
-              <div key={idx} className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
-                <div className="font-semibold text-primary w-24">{signal.platform}</div>
-                <div className="font-mono text-accent">{signal.members}</div>
-                <div className="text-text-muted text-sm">{signal.score}</div>
+          {slide.headline}
+        </motion.h2>
+        
+        {/* Bento: Signals triptych top, Status grid bottom */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          {slide.signals.map((signal, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 + idx * 0.1 }}
+              className="bg-card border border-border rounded-xl p-6 text-center"
+            >
+              <div className="font-semibold text-primary text-lg mb-2">{signal.platform}</div>
+              <div className="font-mono text-3xl font-bold text-accent mb-1">{signal.members}</div>
+              <div className="text-muted-foreground text-sm">{signal.score}</div>
+            </motion.div>
+          ))}
+        </div>
+        
+        {/* Status - 2x2 grid */}
+        <div className="grid grid-cols-2 gap-4">
+          {slide.status.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.5 + idx * 0.1 }}
+              className="flex items-center gap-3 p-4 bg-success/10 border border-success/20 rounded-xl"
+            >
+              <div className="w-8 h-8 rounded-full bg-success flex items-center justify-center flex-shrink-0">
+                <svg className="w-4 h-4 text-success-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
               </div>
-            ))}
-          </div>
-        </motion.div>
-        <motion.div
-          initial={{ x: 30, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <div className="text-sm font-semibold text-text-muted mb-4">PRODUCT STATUS</div>
-          <div className="space-y-3">
-            {slide.status.map((item, idx) => (
-              <div key={idx} className="flex items-center gap-3 p-4 bg-green-50 rounded-xl">
-                <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <span className="text-green-800">{item}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+              <span className="text-foreground font-medium">{item}</span>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   )
 }
 
+// ============================================
+// PRODUCT SLIDE - Triptych + Statement Pattern
+// ============================================
 function ProductSlide({ slide }: { slide: ProductSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-primary mb-8 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
-        {slide.tech.map((tech, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 + idx * 0.1 }}
-            className="bg-gray-50 rounded-xl p-6"
-          >
-            <div className="font-semibold text-primary mb-4">{tech.title}</div>
-            <div className="space-y-2">
-              {tech.items.map((item, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                  <span className="text-sm text-text-secondary">{item}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        ))}
+    <div className="h-full w-full bg-muted/30 flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-5xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        <motion.h2
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl md:text-4xl font-bold text-primary mb-10"
+        >
+          {slide.headline}
+        </motion.h2>
+        
+        {/* Triptych - 3 equal cards */}
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          {slide.tech.map((tech, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 + idx * 0.1 }}
+              className="bg-card border border-border rounded-xl p-6"
+            >
+              <div className="font-semibold text-primary text-lg mb-4">{tech.title}</div>
+              <div className="space-y-3">
+                {tech.items.map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-accent" />
+                    <span className="text-foreground/80">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        
+        {/* Statement banner */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="bg-primary rounded-xl p-8 text-center"
+        >
+          <div className="text-xl md:text-2xl font-semibold text-primary-foreground">{slide.differentiator}</div>
+        </motion.div>
       </div>
-      <motion.div
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="bg-gradient-to-r from-primary to-[#2C5282] rounded-xl p-6 text-white"
-      >
-        <div className="text-xl font-semibold">{slide.differentiator}</div>
-      </motion.div>
     </div>
   )
 }
 
+// ============================================
+// PRICING SLIDE - Bento Triptych with Highlight
+// ============================================
 function PricingSlide({ slide }: { slide: PricingSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-primary mb-8 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
-        {slide.tiers.map((tier, idx) => (
+    <div className="h-full w-full bg-background flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-5xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        <motion.h2
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl md:text-4xl font-bold text-primary mb-10"
+        >
+          {slide.headline}
+        </motion.h2>
+        
+        {/* Pricing tiers - middle one highlighted + scaled */}
+        <div className="grid grid-cols-3 gap-6 mb-10 items-center">
+          {slide.tiers.map((tier, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 + idx * 0.1 }}
+              className={`rounded-xl p-6 ${
+                tier.popular 
+                  ? "bg-primary text-primary-foreground scale-105 shadow-2xl relative z-10 border-2 border-accent" 
+                  : "bg-card border border-border"
+              }`}
+            >
+              {tier.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground text-xs font-bold px-4 py-1 rounded-full">
+                  MOST POPULAR
+                </div>
+              )}
+              <div className={`text-lg font-semibold mb-2 ${tier.popular ? "text-primary-foreground" : "text-foreground"}`}>
+                {tier.name}
+              </div>
+              <div className={`font-mono text-4xl font-bold mb-4 ${tier.popular ? "text-primary-foreground" : "text-primary"}`}>
+                {tier.price}
+                <span className={`text-base font-normal ${tier.popular ? "text-primary-foreground/70" : "text-muted-foreground"}`}>/mo</span>
+              </div>
+              <div className="space-y-2">
+                {tier.features.map((feature, i) => (
+                  <div key={i} className={`flex items-center gap-2 text-sm ${tier.popular ? "text-primary-foreground/90" : "text-foreground/80"}`}>
+                    <div className={`w-1.5 h-1.5 rounded-full ${tier.popular ? "bg-accent" : "bg-accent"}`} />
+                    {feature}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        
+        {/* Unit economics - horizontal */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="flex justify-center gap-16"
+        >
+          {slide.economics.map((econ, idx) => (
+            <div key={idx} className="text-center">
+              <div className="font-mono text-3xl font-bold text-accent">{econ.value}</div>
+              <div className="text-sm text-muted-foreground">{econ.label}</div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
+// ============================================
+// COMPETITION SLIDE - Comparison Pattern
+// ============================================
+function CompetitionSlide({ slide }: { slide: CompetitionSlideData }) {
+  return (
+    <div className="h-full w-full bg-primary/5 flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-5xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        <motion.h2
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl md:text-4xl font-bold text-primary mb-8"
+        >
+          {slide.headline}
+        </motion.h2>
+        
+        {/* Comparison table */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="bg-card rounded-xl border border-border overflow-hidden mb-8"
+        >
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="text-left py-4 px-6 font-semibold text-muted-foreground">Product</th>
+                <th className="text-center py-4 px-4 font-semibold text-muted-foreground">AI</th>
+                <th className="text-center py-4 px-4 font-semibold text-muted-foreground">FM</th>
+                <th className="text-center py-4 px-4 font-semibold text-muted-foreground">Protocols</th>
+                <th className="text-center py-4 px-4 font-semibold text-muted-foreground">Outcomes</th>
+                <th className="text-center py-4 px-6 font-semibold text-muted-foreground">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {slide.comparison.map((row, idx) => (
+                <tr key={idx} className={`border-b border-border last:border-0 ${idx === 0 ? "bg-success/10" : ""}`}>
+                  <td className={`py-4 px-6 font-semibold ${idx === 0 ? "text-primary" : "text-foreground/70"}`}>
+                    {row.name}
+                    {idx === 0 && <span className="ml-2 text-xs text-accent">(Us)</span>}
+                  </td>
+                  <td className="text-center py-4 px-4 text-xl">{row.ai ? "✅" : "❌"}</td>
+                  <td className="text-center py-4 px-4 text-xl">{row.fm ? "✅" : "❌"}</td>
+                  <td className="text-center py-4 px-4 text-xl">{row.protocols ? "✅" : "❌"}</td>
+                  <td className="text-center py-4 px-4 text-xl">{row.outcomes ? "✅" : "❌"}</td>
+                  <td className="text-center py-4 px-6 font-mono text-sm">{row.price}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </motion.div>
+        
+        {/* Moat pills */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="flex flex-wrap gap-3 justify-center"
+        >
+          {slide.moat.map((item, idx) => (
+            <span key={idx} className="px-5 py-2 bg-accent/10 border border-accent/30 rounded-full text-sm font-medium text-accent">
+              {item}
+            </span>
+          ))}
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
+// ============================================
+// GTM SLIDE - Big Left + Stack Pattern
+// ============================================
+function GTMSlide({ slide }: { slide: GTMSlideData }) {
+  return (
+    <div className="h-full w-full bg-background flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-5xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        <motion.h2
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl md:text-4xl font-bold text-primary mb-10"
+        >
+          {slide.headline}
+        </motion.h2>
+        
+        {/* Bento: Channels chart left (60%), Timeline stacked right */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* Channels - 3/5 */}
           <motion.div
-            key={idx}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 + idx * 0.1 }}
-            className={`rounded-xl p-6 ${tier.popular ? "bg-primary text-white ring-4 ring-accent" : "bg-gray-50"}`}
+            initial={{ x: -30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="lg:col-span-3 bg-card border border-border rounded-xl p-6"
           >
-            {tier.popular && (
-              <div className="text-xs font-bold text-accent mb-2">MOST POPULAR</div>
-            )}
-            <div className={`text-lg font-semibold mb-1 ${tier.popular ? "text-white" : "text-primary"}`}>{tier.name}</div>
-            <div className={`font-mono text-3xl font-bold mb-4 ${tier.popular ? "text-white" : "text-primary"}`}>{tier.price}<span className="text-sm font-normal">/mo</span></div>
-            <div className="space-y-2">
-              {tier.features.map((feature, i) => (
-                <div key={i} className={`flex items-center gap-2 text-sm ${tier.popular ? "text-white/80" : "text-text-secondary"}`}>
-                  <div className={`w-1.5 h-1.5 rounded-full ${tier.popular ? "bg-accent" : "bg-accent"}`} />
-                  {feature}
+            <div className="text-sm font-semibold text-muted-foreground mb-6">CHANNEL MIX</div>
+            <div className="space-y-5">
+              {slide.channels.map((channel, idx) => (
+                <div key={idx} className="flex items-center gap-4">
+                  <div className="w-32 text-sm font-medium text-foreground">{channel.name}</div>
+                  <div className="flex-1 h-4 bg-muted rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${channel.pct}%` }}
+                      transition={{ delay: 0.5 + idx * 0.1, duration: 0.5 }}
+                      className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
+                    />
+                  </div>
+                  <div className="w-20 text-right font-mono text-sm text-accent font-bold">{channel.signups}</div>
                 </div>
               ))}
             </div>
           </motion.div>
-        ))}
-      </div>
-      <motion.div
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="flex gap-8 justify-center"
-      >
-        {slide.economics.map((econ, idx) => (
-          <div key={idx} className="text-center">
-            <div className="font-mono text-2xl font-bold text-accent">{econ.value}</div>
-            <div className="text-sm text-text-muted">{econ.label}</div>
-          </div>
-        ))}
-      </motion.div>
-    </div>
-  )
-}
-
-function CompetitionSlide({ slide }: { slide: CompetitionSlideData }) {
-  return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-primary mb-8 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <motion.div
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="overflow-x-auto mb-8"
-      >
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b">
-              <th className="text-left py-3 px-4 font-semibold text-text-muted">Product</th>
-              <th className="text-center py-3 px-4 font-semibold text-text-muted">AI-Powered</th>
-              <th className="text-center py-3 px-4 font-semibold text-text-muted">FM-Specific</th>
-              <th className="text-center py-3 px-4 font-semibold text-text-muted">Protocols</th>
-              <th className="text-center py-3 px-4 font-semibold text-text-muted">Outcomes</th>
-              <th className="text-center py-3 px-4 font-semibold text-text-muted">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {slide.comparison.map((row, idx) => (
-              <tr key={idx} className={`border-b ${idx === 0 ? "bg-green-50" : ""}`}>
-                <td className={`py-3 px-4 font-semibold ${idx === 0 ? "text-primary" : "text-text-secondary"}`}>{row.name}</td>
-                <td className="text-center py-3 px-4">{row.ai ? "✅" : "❌"}</td>
-                <td className="text-center py-3 px-4">{row.fm ? "✅" : "❌"}</td>
-                <td className="text-center py-3 px-4">{row.protocols ? "✅" : "❌"}</td>
-                <td className="text-center py-3 px-4">{row.outcomes ? "✅" : "❌"}</td>
-                <td className="text-center py-3 px-4 font-mono">{row.price}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </motion.div>
-      <motion.div
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="flex flex-wrap gap-3"
-      >
-        {slide.moat.map((item, idx) => (
-          <span key={idx} className="px-4 py-2 bg-accent/10 rounded-full text-sm font-medium text-accent">
-            {item}
-          </span>
-        ))}
-      </motion.div>
-    </div>
-  )
-}
-
-function GTMSlide({ slide }: { slide: GTMSlideData }) {
-  return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-primary mb-8 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="grid md:grid-cols-2 gap-8">
-        <motion.div
-          initial={{ x: -30, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          <div className="text-sm font-semibold text-text-muted mb-4">CHANNELS</div>
-          <div className="space-y-3">
-            {slide.channels.map((channel, idx) => (
-              <div key={idx} className="flex items-center gap-4">
-                <div className="w-32 text-sm font-medium text-primary">{channel.name}</div>
-                <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
-                    style={{ width: `${channel.pct}%` }}
-                  />
-                </div>
-                <div className="w-20 text-right font-mono text-sm text-accent">{channel.signups}</div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-        <motion.div
-          initial={{ x: 30, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <div className="text-sm font-semibold text-text-muted mb-4">TIMELINE</div>
-          <div className="space-y-4">
+          
+          {/* Timeline - 2/5 */}
+          <div className="lg:col-span-2 flex flex-col gap-3">
+            <div className="text-sm font-semibold text-muted-foreground mb-2">GROWTH TIMELINE</div>
             {slide.timeline.map((item, idx) => (
-              <div key={idx} className="flex items-center gap-4">
-                <div className="w-3 h-3 rounded-full bg-accent" />
-                <span className="text-text-secondary">{item}</span>
-              </div>
+              <motion.div
+                key={idx}
+                initial={{ x: 30, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.4 + idx * 0.1 }}
+                className="flex items-center gap-4 p-4 bg-accent/10 border border-accent/20 rounded-xl"
+              >
+                <div className="w-3 h-3 rounded-full bg-accent flex-shrink-0" />
+                <span className="text-foreground">{item}</span>
+              </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   )
 }
 
+// ============================================
+// ASK SLIDE - Data Grid + Statement Pattern
+// ============================================
 function AskSlide({ slide }: { slide: AskSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-accent mb-8 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
-        {slide.funds.map((fund, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 + idx * 0.1 }}
-            className="bg-gray-50 rounded-xl p-6"
-          >
-            <div className="font-mono text-2xl font-bold text-primary mb-2">{fund.amount}</div>
-            <div className="font-semibold text-text-secondary mb-2">{fund.purpose}</div>
-            <div className="text-sm text-text-muted">{fund.items}</div>
-          </motion.div>
-        ))}
-      </div>
-      <motion.div
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="flex gap-8 justify-center"
-      >
-        {slide.milestones.map((ms, idx) => (
-          <div key={idx} className="text-center">
-            <div className="font-mono text-sm text-text-muted mb-1">{ms.month}</div>
-            <div className="font-mono text-2xl font-bold text-accent">{ms.mrr}</div>
-            <div className="text-xs text-text-muted">MRR</div>
+    <div className="h-full w-full bg-muted/30 flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-5xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        <motion.h2
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl md:text-4xl font-bold text-accent mb-10"
+        >
+          {slide.headline}
+        </motion.h2>
+        
+        {/* Bento: Use of funds grid */}
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          {slide.funds.map((fund, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 + idx * 0.1 }}
+              className={`rounded-xl p-6 ${idx === 0 ? "bg-primary text-primary-foreground" : "bg-card border border-border"}`}
+            >
+              <div className={`font-mono text-3xl font-bold mb-2 ${idx === 0 ? "text-accent" : "text-primary"}`}>
+                {fund.amount}
+              </div>
+              <div className={`font-semibold mb-2 ${idx === 0 ? "text-primary-foreground" : "text-foreground"}`}>
+                {fund.purpose}
+              </div>
+              <div className={`text-sm ${idx === 0 ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                {fund.items}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        
+        {/* Milestones - horizontal strip */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="bg-card border border-border rounded-xl p-6"
+        >
+          <div className="text-sm font-semibold text-muted-foreground mb-4">MRR MILESTONES</div>
+          <div className="flex justify-around">
+            {slide.milestones.map((ms, idx) => (
+              <div key={idx} className="text-center">
+                <div className="font-mono text-sm text-muted-foreground mb-1">{ms.month}</div>
+                <div className="font-mono text-3xl font-bold text-accent">{ms.mrr}</div>
+              </div>
+            ))}
           </div>
-        ))}
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   )
 }
 
+// ============================================
+// WHY NOW SLIDE - Statement + Proof Pattern
+// ============================================
 function WhyNowSlide({ slide }: { slide: WhyNowSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col justify-center p-8 md:p-16 bg-white">
-      <SlideHeader title={slide.title} icon={slide.icon} />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold text-primary mb-8 max-w-4xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="grid md:grid-cols-2 gap-6 mb-8">
-        {slide.reasons.map((reason, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 + idx * 0.1 }}
-            className="bg-gradient-to-br from-primary/5 to-accent/5 border border-gray-100 rounded-xl p-6"
-          >
-            <div className="font-semibold text-primary mb-2">{reason.title}</div>
-            <div className="text-sm text-text-secondary">{reason.desc}</div>
-          </motion.div>
-        ))}
+    <div className="h-full w-full bg-background flex items-center justify-center p-8 md:p-16">
+      <div className="max-w-5xl w-full">
+        <SlideHeader title={slide.title} icon={slide.icon} />
+        <motion.h2
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl md:text-4xl font-bold text-primary mb-10 text-center"
+        >
+          {slide.headline}
+        </motion.h2>
+        
+        {/* Reasons - 2x2 bento grid */}
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          {slide.reasons.map((reason, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.3 + idx * 0.1 }}
+              className="bg-card border border-border rounded-xl p-6 hover:border-accent/50 transition-colors"
+            >
+              <div className="font-semibold text-primary text-lg mb-2">{reason.title}</div>
+              <div className="text-foreground/70">{reason.desc}</div>
+            </motion.div>
+          ))}
+        </div>
+        
+        {/* Timing contrast - NOW highlighted */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="flex gap-4 justify-center"
+        >
+          {slide.contrast.map((item, idx) => (
+            <span
+              key={idx}
+              className={`px-5 py-3 rounded-full text-sm font-medium ${
+                idx === 2 
+                  ? "bg-accent text-accent-foreground shadow-lg scale-110" 
+                  : "bg-muted text-muted-foreground"
+              }`}
+            >
+              {item}
+            </span>
+          ))}
+        </motion.div>
       </div>
-      <motion.div
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.7 }}
-        className="flex gap-4 justify-center flex-wrap"
-      >
-        {slide.contrast.map((item, idx) => (
-          <span
-            key={idx}
-            className={`px-4 py-2 rounded-full text-sm font-medium ${
-              idx === 2 ? "bg-accent text-white" : "bg-gray-100 text-text-muted"
-            }`}
-          >
-            {item}
-          </span>
-        ))}
-      </motion.div>
     </div>
   )
 }
 
+// ============================================
+// VISION SLIDE - Statement + Roadmap Pattern
+// ============================================
 function VisionSlide({ slide }: { slide: VisionSlideData }) {
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-8 md:p-16 bg-gradient-to-br from-primary via-primary to-[#2C5282] text-white">
-      <SlideHeader title={slide.title} icon={slide.icon} light />
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl md:text-4xl font-bold mb-12 text-center max-w-3xl"
-      >
-        {slide.headline}
-      </motion.h2>
-      <div className="flex flex-col md:flex-row gap-6 mb-12">
-        {slide.roadmap.map((item, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 + idx * 0.1 }}
-            className="bg-white/10 backdrop-blur rounded-xl p-6 text-center"
-          >
-            <div className="font-mono text-accent text-sm font-bold mb-2">{item.year}</div>
-            <div className="font-semibold text-lg mb-2">{item.milestone}</div>
-            <div className="text-sm text-white/70">{item.metrics}</div>
-          </motion.div>
-        ))}
+    <div className="h-full w-full relative overflow-hidden">
+      {/* Background image with overlay */}
+      <div className="absolute inset-0">
+        <Image
+          src="/pitch/vision-visual.png"
+          alt=""
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-primary/80" />
       </div>
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.7 }}
-        className="text-2xl md:text-3xl font-bold text-accent text-center max-w-2xl"
-      >
-        &ldquo;{slide.closing}&rdquo;
-      </motion.div>
+      
+      <div className="relative h-full flex items-center justify-center p-8 md:p-16">
+        <div className="max-w-5xl w-full text-center">
+          <SlideHeader title={slide.title} icon={slide.icon} light centered />
+          <motion.h2
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-3xl md:text-5xl font-bold text-white mb-12"
+          >
+            {slide.headline}
+          </motion.h2>
+          
+          {/* Roadmap - horizontal timeline */}
+          <div className="flex flex-col md:flex-row gap-6 mb-12 justify-center">
+            {slide.roadmap.map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 + idx * 0.1 }}
+                className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 flex-1 max-w-xs"
+              >
+                <div className="font-mono text-accent text-sm font-bold mb-2">{item.year}</div>
+                <div className="font-semibold text-white text-lg mb-2">{item.milestone}</div>
+                <div className="text-white/60 text-sm">{item.metrics}</div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Closing statement */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="text-2xl md:text-3xl font-bold text-accent"
+          >
+            &ldquo;{slide.closing}&rdquo;
+          </motion.div>
+        </div>
+      </div>
     </div>
   )
 }
 
-function SlideHeader({ title, icon: Icon, light = false }: { title: string; icon: LucideIcon; light?: boolean }) {
+// ============================================
+// SLIDE HEADER COMPONENT
+// ============================================
+function SlideHeader({ title, icon: Icon, light = false, centered = false }: { 
+  title: string
+  icon: LucideIcon
+  light?: boolean
+  centered?: boolean
+}) {
   return (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="flex items-center gap-3 mb-6"
+      className={`flex items-center gap-3 mb-6 ${centered ? "justify-center" : ""}`}
     >
-      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${light ? "bg-white/10" : "bg-primary/10"}`}>
+      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${light ? "bg-white/10" : "bg-primary/10"}`}>
         <Icon className={`w-5 h-5 ${light ? "text-accent" : "text-primary"}`} />
       </div>
-      <span className={`font-mono text-sm uppercase tracking-wider ${light ? "text-white/60" : "text-text-muted"}`}>
+      <span className={`font-mono text-sm uppercase tracking-widest ${light ? "text-white/60" : "text-muted-foreground"}`}>
         {title}
       </span>
     </motion.div>
