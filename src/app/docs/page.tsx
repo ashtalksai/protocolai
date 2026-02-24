@@ -27,11 +27,11 @@ import Link from "next/link"
 
 // Navigation items
 const navItems = [
-  { id: "research", label: "Research", icon: Search, description: "Problem, market, competitors" },
-  { id: "gtm", label: "GTM Plan", icon: Target, description: "Channels, timeline, budget" },
-  { id: "marketing", label: "Marketing Plan", icon: Megaphone, description: "Positioning, content, KPIs" },
-  { id: "brand", label: "Brand Spec", icon: Palette, description: "Colors, typography, components" },
-  { id: "pitch", label: "Pitch Deck", icon: Presentation, description: "Slides content" },
+  { id: "research", label: "Research", icon: Search, description: "Problem, market, competitors", fullPage: "/docs/research" },
+  { id: "gtm", label: "GTM Plan", icon: Target, description: "Channels, timeline, budget", fullPage: "/docs/gtm" },
+  { id: "marketing", label: "Marketing Plan", icon: Megaphone, description: "Positioning, content, KPIs", fullPage: "/docs/marketing" },
+  { id: "brand", label: "Brand Spec", icon: Palette, description: "Colors, typography, components", fullPage: "/docs/brand" },
+  { id: "pitch", label: "Pitch Deck", icon: Presentation, description: "Slides content", fullPage: "/docs/pitch" },
 ]
 
 export default function DocsPage() {
@@ -187,26 +187,41 @@ export default function DocsPage() {
           {/* Research Section */}
           <section id="research" className="mb-20">
             <ResearchSection />
+            <Link href="/docs/research" className="inline-flex items-center gap-2 mt-6 text-[#F59E0B] hover:underline font-medium">
+              View full Research doc <ExternalLink className="w-4 h-4" />
+            </Link>
           </section>
 
           {/* GTM Section */}
           <section id="gtm" className="mb-20">
             <GTMSection />
+            <Link href="/docs/gtm" className="inline-flex items-center gap-2 mt-6 text-[#F59E0B] hover:underline font-medium">
+              View full GTM Plan <ExternalLink className="w-4 h-4" />
+            </Link>
           </section>
 
           {/* Marketing Section */}
           <section id="marketing" className="mb-20">
             <MarketingSection />
+            <Link href="/docs/marketing" className="inline-flex items-center gap-2 mt-6 text-[#F59E0B] hover:underline font-medium">
+              View full Marketing Plan <ExternalLink className="w-4 h-4" />
+            </Link>
           </section>
 
           {/* Brand Section */}
           <section id="brand" className="mb-20">
             <BrandSection />
+            <Link href="/docs/brand" className="inline-flex items-center gap-2 mt-6 text-[#F59E0B] hover:underline font-medium">
+              View full Brand Spec <ExternalLink className="w-4 h-4" />
+            </Link>
           </section>
 
           {/* Pitch Section */}
           <section id="pitch" className="mb-20">
             <PitchSection />
+            <Link href="/docs/pitch" className="inline-flex items-center gap-2 mt-6 text-[#F59E0B] hover:underline font-medium">
+              View full Pitch content <ExternalLink className="w-4 h-4" />
+            </Link>
           </section>
         </main>
       </div>
