@@ -635,7 +635,7 @@ function AssetsContent() {
       dimensions: "1500 × 750px",
       format: "PNG",
       preview: "/images/logo.png",
-      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      downloadUrl: "/images/logo.png",
       bgColor: "#1E3A5F",
     },
     {
@@ -644,7 +644,7 @@ function AssetsContent() {
       dimensions: "32 × 32px",
       format: "ICO / PNG",
       preview: "/favicon.ico",
-      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      downloadUrl: "/favicon.png",
       bgColor: "#FAFAFA",
     },
     {
@@ -653,7 +653,7 @@ function AssetsContent() {
       dimensions: "1080 × 1080px",
       format: "PNG",
       preview: "/images/app-icon.png",
-      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      downloadUrl: "/images/app-icon.png",
       bgColor: "#1E3A5F",
     },
     {
@@ -662,7 +662,7 @@ function AssetsContent() {
       dimensions: "1200 × 630px",
       format: "PNG",
       preview: "/images/og-image.png",
-      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      downloadUrl: "/images/og-image.png",
       bgColor: "#1E3A5F",
     },
     {
@@ -671,7 +671,7 @@ function AssetsContent() {
       dimensions: "1584 × 396px",
       format: "PNG",
       preview: "/images/linkedin-banner.png",
-      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      downloadUrl: "/images/linkedin-banner.png",
       bgColor: "#1E3A5F",
     },
     {
@@ -680,7 +680,7 @@ function AssetsContent() {
       dimensions: "1500 × 500px",
       format: "PNG",
       preview: "/images/twitter-header.png",
-      downloadUrl: "https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3",
+      downloadUrl: "/images/twitter-header.png",
       bgColor: "#1E3A5F",
     },
   ]
@@ -703,18 +703,12 @@ function AssetsContent() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h2 className="text-xl font-semibold mb-1">Complete Asset Package</h2>
-            <p className="text-white/70">Download all brand assets in one click</p>
+            <p className="text-white/70">All brand assets are embedded on this page — click individual download buttons below</p>
           </div>
-          <a
-            href="https://drive.google.com/drive/folders/1hmr0Ncsbh6Lv7yfML3v26wBIrQzh9Gc3"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#F59E0B] hover:bg-[#D97706] text-white px-6 py-3 rounded-xl font-medium transition-colors"
-          >
-            <Download className="w-5 h-5" />
-            Open in Google Drive
-            <ExternalLink className="w-4 h-4" />
-          </a>
+          <div className="inline-flex items-center gap-2 bg-white/10 px-6 py-3 rounded-xl font-medium">
+            <CheckCircle2 className="w-5 h-5 text-green-400" />
+            Assets Ready
+          </div>
         </div>
       </div>
 
@@ -750,8 +744,7 @@ function AssetsContent() {
 
               <a
                 href={asset.downloadUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                download
                 className="w-full inline-flex items-center justify-center gap-2 border-2 border-[#1E3A5F] text-[#1E3A5F] px-4 py-2 rounded-lg font-medium hover:bg-[#1E3A5F] hover:text-white transition-colors text-sm"
               >
                 <Download className="w-4 h-4" />
