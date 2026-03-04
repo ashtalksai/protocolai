@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -20,15 +21,29 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    
-    // Simulate login
-    setTimeout(() => {
+
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    })
+
+    if (result?.error) {
       toast({
-        title: "Welcome back!",
-        description: "Redirecting to dashboard...",
+        title: "Login failed",
+        description: "Invalid email or password",
+        variant: "destructive",
       })
-      router.push("/dashboard")
-    }, 1500)
+      setLoading(false)
+      return
+    }
+
+    toast({
+      title: "Welcome back!",
+      description: "Redirecting to dashboard...",
+    })
+    router.push("/dashboard")
+    router.refresh()
   }
 
   const handleGoogleLogin = () => {

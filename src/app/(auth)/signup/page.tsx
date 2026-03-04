@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -33,15 +34,57 @@ export default function SignupPage() {
     }
     
     setLoading(true)
-    
-    // Simulate signup
-    setTimeout(() => {
+
+    try {
+      // Create account
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, plan: selectedPlan }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        toast({
+          title: "Signup failed",
+          description: data.error || "Something went wrong",
+          variant: "destructive",
+        })
+        setLoading(false)
+        return
+      }
+
+      // Auto sign-in after successful signup
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      })
+
+      if (result?.error) {
+        toast({
+          title: "Account created",
+          description: "Please log in with your new credentials",
+        })
+        router.push("/login")
+        return
+      }
+
       toast({
         title: "Account created!",
         description: "Welcome to ProtocolAI. Redirecting to dashboard...",
       })
       router.push("/dashboard")
-    }, 1500)
+      router.refresh()
+    } catch {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      })
+      setLoading(false)
+    }
   }
 
   const handleGoogleSignup = () => {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
+import { AuthSessionProvider } from "@/components/providers/session-provider"
 
 export const metadata: Metadata = {
   title: "ProtocolAI - AI-Powered Protocols for Functional Medicine",
@@ -23,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
-        <Toaster />
+        <AuthSessionProvider>
+          {children}
+          <Toaster />
+        </AuthSessionProvider>
       </body>
     </html>
   )

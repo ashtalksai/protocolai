@@ -1,5 +1,6 @@
 "use client"
 
+/* eslint-disable @next/next/no-img-element */
 import { Palette, Type, Layers, Layout, Box, Zap, Image, FileCode } from "lucide-react"
 
 export default function BrandDocsPage() {
@@ -478,34 +479,180 @@ export default function BrandDocsPage() {
         </div>
       </section>
 
-      {/* Assets */}
+      {/* Brand Assets */}
       <section className="py-16 px-6">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-bold text-[#1E3A5F] mb-8 flex items-center gap-2">
             <Image className="w-6 h-6 text-[#F59E0B]" />
-            Generated Assets
+            Brand Assets
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { name: "hero-ai-analysis.png", desc: "Abstract AI analyzing medical data illustration", use: "Landing hero" },
-              { name: "icon-features-set.png", desc: "6 minimalist line icons for features", use: "Features section" },
-              { name: "how-it-works-flow.png", desc: "3-step process flow diagram", use: "How It Works" },
-              { name: "bg-grid-pattern.png", desc: "Subtle geometric grid background", use: "Hero/CTA overlays" },
-            ].map((asset, i) => (
-              <div key={i} className="bg-white rounded-xl p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 bg-[#1E3A5F]/10 rounded-xl flex items-center justify-center">
-                    <FileCode className="w-8 h-8 text-[#1E3A5F]" />
-                  </div>
+          <p className="text-gray-600 mb-8">
+            Official Protocol Pad brand assets for marketing, social media, and app stores. 
+            Click any asset to download.
+          </p>
+          
+          <div className="grid gap-8">
+            {/* Logo */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200">
+              <div className="flex flex-col md:flex-row gap-6">
+                <div className="flex-1">
+                  <a href="/assets/logo.png" download className="block">
+                    <img 
+                      src="/assets/logo.png" 
+                      alt="Protocol Pad Logo" 
+                      className="w-full max-w-md rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                    />
+                  </a>
+                </div>
+                <div className="md:w-64">
+                  <h3 className="font-semibold text-[#1E3A5F] mb-2">Logo</h3>
+                  <p className="text-sm text-gray-600 mb-2">Primary logo with wordmark and icon. Use on dark backgrounds or with the gradient.</p>
+                  <p className="text-xs text-gray-400 mb-3">1500 × 750px • PNG</p>
+                  <a 
+                    href="/assets/logo.png" 
+                    download
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#F59E0B] hover:bg-[#D97706] text-white rounded-lg text-sm font-medium transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    Download
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            {/* App Icon & Favicon Row */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-xl p-6 border border-gray-200">
+                <div className="flex gap-6">
+                  <a href="/assets/app-icon.png" download>
+                    <img 
+                      src="/assets/app-icon.png" 
+                      alt="Protocol Pad App Icon" 
+                      className="w-32 h-32 rounded-2xl shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                    />
+                  </a>
                   <div>
-                    <code className="font-mono text-[#F59E0B]">{asset.name}</code>
-                    <p className="text-sm text-gray-600 mt-1">{asset.desc}</p>
-                    <p className="text-xs text-gray-400 mt-2">Usage: {asset.use}</p>
+                    <h3 className="font-semibold text-[#1E3A5F] mb-2">App Icon</h3>
+                    <p className="text-sm text-gray-600 mb-2">Square icon for app stores and PWA.</p>
+                    <p className="text-xs text-gray-400 mb-3">1080 × 1080px • PNG</p>
+                    <a 
+                      href="/assets/app-icon.png" 
+                      download
+                      className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1E3A5F] hover:bg-[#2D4A6F] text-white rounded-lg text-sm font-medium transition-colors"
+                    >
+                      Download
+                    </a>
                   </div>
                 </div>
               </div>
-            ))}
+              
+              <div className="bg-white rounded-xl p-6 border border-gray-200">
+                <div className="flex gap-6">
+                  <a href="/assets/favicon.png" download>
+                    <div className="w-32 h-32 bg-[#FAFAFA] rounded-2xl flex items-center justify-center border border-gray-200">
+                      <img 
+                        src="/assets/favicon.png" 
+                        alt="Protocol Pad Favicon" 
+                        className="w-16 h-16 hover:scale-110 transition-transform cursor-pointer"
+                        style={{ imageRendering: 'pixelated' }}
+                      />
+                    </div>
+                  </a>
+                  <div>
+                    <h3 className="font-semibold text-[#1E3A5F] mb-2">Favicon</h3>
+                    <p className="text-sm text-gray-600 mb-2">Browser tab icon, compact mark.</p>
+                    <p className="text-xs text-gray-400 mb-3">32 × 32px • PNG</p>
+                    <a 
+                      href="/assets/favicon.png" 
+                      download
+                      className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1E3A5F] hover:bg-[#2D4A6F] text-white rounded-lg text-sm font-medium transition-colors"
+                    >
+                      Download
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* OG Image */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200">
+              <div className="flex flex-col md:flex-row gap-6">
+                <div className="flex-1">
+                  <a href="/assets/og-image.png" download className="block">
+                    <img 
+                      src="/assets/og-image.png" 
+                      alt="Protocol Pad OG Image" 
+                      className="w-full max-w-lg rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                    />
+                  </a>
+                </div>
+                <div className="md:w-64">
+                  <h3 className="font-semibold text-[#1E3A5F] mb-2">Open Graph Image</h3>
+                  <p className="text-sm text-gray-600 mb-2">Social sharing preview for Facebook, LinkedIn posts, and link unfurls.</p>
+                  <p className="text-xs text-gray-400 mb-3">1200 × 630px • PNG</p>
+                  <a 
+                    href="/assets/og-image.png" 
+                    download
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#F59E0B] hover:bg-[#D97706] text-white rounded-lg text-sm font-medium transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    Download
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            {/* Social Banners */}
+            <div className="space-y-6">
+              <h3 className="font-semibold text-[#1E3A5F]">Social Media Banners</h3>
+              
+              <div className="bg-white rounded-xl p-6 border border-gray-200">
+                <a href="/assets/linkedin-banner.png" download className="block mb-4">
+                  <img 
+                    src="/assets/linkedin-banner.png" 
+                    alt="Protocol Pad LinkedIn Banner" 
+                    className="w-full rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                  />
+                </a>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-medium text-[#1E3A5F]">LinkedIn Banner</h4>
+                    <p className="text-xs text-gray-400">1584 × 396px • PNG</p>
+                  </div>
+                  <a 
+                    href="/assets/linkedin-banner.png" 
+                    download
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1E3A5F] hover:bg-[#2D4A6F] text-white rounded-lg text-sm font-medium transition-colors"
+                  >
+                    Download
+                  </a>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 border border-gray-200">
+                <a href="/assets/twitter-header.png" download className="block mb-4">
+                  <img 
+                    src="/assets/twitter-header.png" 
+                    alt="Protocol Pad Twitter Header" 
+                    className="w-full rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                  />
+                </a>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-medium text-[#1E3A5F]">Twitter/X Header</h4>
+                    <p className="text-xs text-gray-400">1500 × 500px • PNG</p>
+                  </div>
+                  <a 
+                    href="/assets/twitter-header.png" 
+                    download
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1E3A5F] hover:bg-[#2D4A6F] text-white rounded-lg text-sm font-medium transition-colors"
+                  >
+                    Download
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

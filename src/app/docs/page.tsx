@@ -19,7 +19,6 @@ import {
   Presentation,
   ExternalLink,
   Download,
-  Image as ImageIcon,
   Sparkles
 } from "lucide-react"
 
@@ -631,57 +630,58 @@ function AssetsContent() {
   const assets = [
     {
       name: "Logo",
-      description: "Primary brand logo",
+      description: "Primary brand logo with wordmark",
       dimensions: "1500 × 750px",
       format: "PNG",
-      preview: "/images/logo.png",
-      downloadUrl: "/images/logo.png",
-      bgColor: "#1E3A5F",
+      src: "/assets/logo.png",
+      downloadUrl: "/assets/logo.png",
+      aspectClass: "aspect-[2/1]",
     },
     {
       name: "Favicon",
       description: "Browser tab icon",
       dimensions: "32 × 32px",
-      format: "ICO / PNG",
-      preview: "/favicon.ico",
-      downloadUrl: "/favicon.png",
-      bgColor: "#FAFAFA",
+      format: "PNG",
+      src: "/assets/favicon.png",
+      downloadUrl: "/assets/favicon.png",
+      aspectClass: "aspect-square",
+      small: true,
     },
     {
       name: "App Icon",
       description: "Mobile & app stores",
       dimensions: "1080 × 1080px",
       format: "PNG",
-      preview: "/images/app-icon.png",
-      downloadUrl: "/images/app-icon.png",
-      bgColor: "#1E3A5F",
+      src: "/assets/app-icon.png",
+      downloadUrl: "/assets/app-icon.png",
+      aspectClass: "aspect-square",
     },
     {
       name: "OG Image",
       description: "Social sharing preview",
       dimensions: "1200 × 630px",
       format: "PNG",
-      preview: "/images/og-image.png",
-      downloadUrl: "/images/og-image.png",
-      bgColor: "#1E3A5F",
+      src: "/assets/og-image.png",
+      downloadUrl: "/assets/og-image.png",
+      aspectClass: "aspect-[1200/630]",
     },
     {
       name: "LinkedIn Banner",
       description: "Company page banner",
       dimensions: "1584 × 396px",
       format: "PNG",
-      preview: "/images/linkedin-banner.png",
-      downloadUrl: "/images/linkedin-banner.png",
-      bgColor: "#1E3A5F",
+      src: "/assets/linkedin-banner.png",
+      downloadUrl: "/assets/linkedin-banner.png",
+      aspectClass: "aspect-[4/1]",
     },
     {
       name: "Twitter Header",
       description: "Profile header image",
       dimensions: "1500 × 500px",
       format: "PNG",
-      preview: "/images/twitter-header.png",
-      downloadUrl: "/images/twitter-header.png",
-      bgColor: "#1E3A5F",
+      src: "/assets/twitter-header.png",
+      downloadUrl: "/assets/twitter-header.png",
+      aspectClass: "aspect-[3/1]",
     },
   ]
 
@@ -698,16 +698,16 @@ function AssetsContent() {
         </div>
       </div>
 
-      {/* Download All Banner */}
+      {/* Intro Banner */}
       <div className="bg-gradient-to-br from-[#1E3A5F] to-[#2D4A6F] text-white rounded-2xl p-6 mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h2 className="text-xl font-semibold mb-1">Complete Asset Package</h2>
-            <p className="text-white/70">All brand assets are embedded on this page — click individual download buttons below</p>
+            <h2 className="text-xl font-semibold mb-1">Official Protocol Pad Assets</h2>
+            <p className="text-white/70">Click any image to download. Use these for marketing, social media, and app stores.</p>
           </div>
-          <div className="inline-flex items-center gap-2 bg-white/10 px-6 py-3 rounded-xl font-medium">
-            <CheckCircle2 className="w-5 h-5 text-green-400" />
-            Assets Ready
+          <div className="flex items-center gap-2 text-[#F59E0B]">
+            <Download className="w-5 h-5" />
+            <span className="font-medium">Click to download</span>
           </div>
         </div>
       </div>
@@ -719,14 +719,28 @@ function AssetsContent() {
             key={i}
             className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow group"
           >
-            {/* Preview Area */}
-            <div
-              className="h-40 flex items-center justify-center p-4 relative"
-              style={{ backgroundColor: asset.bgColor }}
+            {/* Preview Area with actual image */}
+            <a 
+              href={asset.downloadUrl} 
+              download
+              className="block bg-[#1E3A5F] p-4 relative overflow-hidden"
             >
-              <ImageIcon className={`w-16 h-16 ${asset.bgColor === "#FAFAFA" ? "text-[#1E3A5F]/20" : "text-white/30"}`} />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-            </div>
+              <div className={`${asset.aspectClass} flex items-center justify-center`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src={asset.src} 
+                  alt={asset.name}
+                  className={`object-contain max-h-full max-w-full rounded ${asset.small ? "w-16 h-16" : ""}`}
+                  style={asset.small ? { imageRendering: 'pixelated' } : undefined}
+                />
+              </div>
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                <div className="bg-white/90 text-[#1E3A5F] px-4 py-2 rounded-lg font-medium flex items-center gap-2">
+                  <Download className="w-4 h-4" />
+                  Download
+                </div>
+              </div>
+            </a>
 
             {/* Info */}
             <div className="p-4">

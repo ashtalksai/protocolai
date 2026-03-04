@@ -14,6 +14,7 @@ import {
   ChevronDown
 } from "lucide-react"
 import { useState } from "react"
+import { signOut, useSession } from "next-auth/react"
 
 const navItems = [
   { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -26,6 +27,7 @@ const navItems = [
 export function Sidebar() {
   const pathname = usePathname()
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const { data: session } = useSession()
 
   return (
     <aside className="fixed left-0 top-0 h-screen w-60 bg-white border-r border-border flex flex-col">
@@ -69,10 +71,10 @@ export function Sidebar() {
             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-surface-hover transition-colors"
           >
             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-semibold">
-              DR
+              {(session?.user?.name || session?.user?.email || "U").slice(0, 2).toUpperCase()}
             </div>
             <div className="flex-1 text-left">
-              <p className="font-medium text-text-primary text-sm">Dr. Jane Doe</p>
+              <p className="font-medium text-text-primary text-sm">{session?.user?.name || session?.user?.email || "User"}</p>
               <span className="inline-block px-2 py-0.5 bg-accent/10 text-accent text-xs rounded-full">
                 Starter
               </span>
@@ -93,7 +95,7 @@ export function Sidebar() {
                 Settings
               </Link>
               <button
-                onClick={() => window.location.href = "/"}
+                onClick={() => signOut({ callbackUrl: "/login" })}
                 className="w-full flex items-center gap-2 px-4 py-2 text-sm text-destructive hover:bg-surface-hover"
               >
                 <LogOut className="w-4 h-4" />
